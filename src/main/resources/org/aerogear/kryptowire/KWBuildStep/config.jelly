@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:c="/lib/credentials">
+    <f:entry field="platform" title="Platform">
+        <select name="platform">
+            <option value="android">Android</option>
+            <option value="ios">iOS</option>
+        </select>
+    </f:entry>
+    <f:entry field="filePath" title="File Path">
+        <f:textbox/>
+    </f:entry>
+</j:jelly>

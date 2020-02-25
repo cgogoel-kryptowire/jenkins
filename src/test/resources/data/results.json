@@ -1,0 +1,31 @@
+[
+  {
+    "uuid": "a40b03c4-7825-4a60-9eda-db6c477bb568",
+    "platform": "android",
+    "package": "org.aerogear.dummy2",
+    "version": "1.0",
+    "hash": "082e562b9a9ec297ae7db40d24a09460949b2ebf",
+    "complete": true,
+    "submitted_at": "",
+    "threat_score": 40
+  },
+  {
+    "uuid": "911dafa8-2920-4478-8050-65d7c094efa7",
+    "platform": "android",
+    "package": "org.aerogear.dummy",
+    "version": "1.0",
+    "hash": "d89447240f1715337c5276e5822753b8997475fb",
+    "complete": true,
+    "submitted_at": "",
+    "threat_score": 40
+  },
+  {
+    "uuid": "db8ed43b-404c-40cb-93c7-65983f7a077f",
+    "platform": "android",
+    "package": "org.aerogear.dummy3",
+    "version": "1.0",
+    "hash": "a039fccf6087ffa8343255c03ca6c4b6592268f2",
+    "complete": false,
+    "submitted_at": ""
+  }
+]

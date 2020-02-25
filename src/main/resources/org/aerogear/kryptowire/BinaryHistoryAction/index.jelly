@@ -1,0 +1,137 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+    <l:layout title="Kryptowire Scan Results" norefresh="true">
+        <l:side-panel>
+            <st:include page="sidepanel.jelly" it="${it.run}" optional="true" />
+        </l:side-panel>
+        <l:main-panel>
+            <style>
+                .score {
+                    font-weight: bold;
+                }
+
+                #kw-report-links a.selected {
+                    font-weight: bold;
+                }
+            </style>
+            <script>
+                <![CDATA[
+                    function bootstrap() {
+                        var container = document.getElementById('kw-report-links');
+                        if (!container) {
+                            return;
+                        }
+                        var links = container.getElementsByTagName("a");
+                        for (var i = 0; i < links.length; i++) {
+                            var link = links[i];
+                            link.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                var index = this.dataset.index;
+                                select(links, index);
+                            });
+                        }
+
+                    }
+                    function select(links, index) {
+                        var content = document.getElementById('kw-pdf-content');
+                        for (var i = 0; i < links.length; i++) {
+                            if (i == index) {
+                                links[i].setAttribute("class", "selected");
+                            } else {
+                                links[i].setAttribute("class", "");
+                            }
+                            content.innerHTML = [
+                                '<embed',
+                                'src="' + links[i].getAttribute('href') + '"',
+                                'width="600"',
+                                'height="500"',
+                                'alt="pdf"',
+                                'pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"',
+                                '/>'
+                            ].join(' ');
+                        }
+                    }
+                ]]>
+            </script>
+            <div class="container-fluid">
+                <div class="row" style="max-height:50px;">
+                    <div class="col-lg">
+                        <div class="col-lg-6">
+                            <img src="${resURL}/plugin/kryptowire/images/kryptowire-logo.png" />
+                        </div>
+                        <div class="col-lg-10">
+                            <img style="width:39px;height:39px;" src="${resURL}/plugin/kryptowire/images/${it.info.platform}-logo.png" />
+                            <strong style="margin-left:3px;font-size:20px;">${it.info.pkg}</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="max-height:75px">
+                    <div class="col-lg">
+                        <div class="col-lg-6">
+                            <p>
+                                <strong>App Version:</strong>
+                                ${it.info.version}
+                            </p>
+                            <j:choose>
+                                <j:when test="${it.status.complete==true}">
+                                    <p class="score">
+                                        Threat Score: ${it.status.score}
+                                    </p>
+                                </j:when>
+                            </j:choose>
+                        </div>
+                        <div class="col-lg-10">
+                            <j:choose>
+                                <j:when test="${it.status.complete==true}">
+                                    <p>
+                                        <strong>Submitted:</strong>
+                                        ${it.status.submittedAt}
+                                    </p>
+                                </j:when>
+                            </j:choose>
+                            <p>
+                                <a style="color:#204A87" target="_blank" href="${it.externalLink}">Kryptowire Dashboard</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <j:choose>
+                    <j:when test="${it.status.complete==true}">
+                        <div class="row" style="max-height: 50px;">
+                            <div class="col-lg">
+                                <p id="kw-report-links" style="padding-left:15px;">
+                                    <strong>Reports: </strong>
+                                    <a style="color:#204A87" data-index="0" target="_blank" onclick="select(this, 0)" href="${it.reportPath}" class="selected">Kryptowire PDF Report</a>
+                                    |
+                                    <a style="color:#204A87" data-index="1" target="_blank" onclick="select(this, 1)" href="${it.NIAPReportPath}">NIAP PDF Report</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div id="kw-pdf-content">
+                            <embed
+                                    src="${it.reportPath}"
+                                    style="display:block;"
+                                    width="600"
+                                    height="500"
+                                    alt="pdf"
+                                    pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"
+                            />
+                        </div>
+                    </j:when>
+                    <j:when test="${it.status.complete==false}">
+                        <h1>Security scan in progress... Please check back later.</h1>
+                    </j:when>
+                </j:choose>
+            </div>
+            <script>
+            <![CDATA[
+                console.log('Bootstrapping');
+                console.log('Root URL: ${rootURL}');
+                console.log('Res URL: ${resURL}');
+                console.log('Images URL: ${imagesURL}');
+                bootstrap();
+            ]]>
+            </script>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
