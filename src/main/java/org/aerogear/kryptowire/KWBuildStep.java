@@ -58,7 +58,6 @@ public class KWBuildStep extends Builder implements SimpleBuildStep {
 
         KryptowireService kws = new KryptowireServiceImpl(kwEndpoint,  kwApiKey);
         logger.println("Service endpoint: " + ((KryptowireServiceImpl) kws).getApiEndpoint());
-        logger.println("Service api key: " + ((KryptowireServiceImpl) kws).getApiKey());
 
         JSONObject resp = kws.submit(this.platform, fp);
 
