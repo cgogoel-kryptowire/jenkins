@@ -2,12 +2,8 @@ package org.aerogear.kryptowire.workflow;
 
 import hudson.Extension;
 import hudson.FilePath;
-import hudson.model.AbstractProject;
 import hudson.model.Run;
-import hudson.tasks.BuildStep;
 import hudson.model.TaskListener;
-import hudson.tasks.BuildStepDescriptor;
-import hudson.tasks.Builder;
 import jenkins.model.GlobalConfiguration;
 import org.aerogear.kryptowire.BinaryInfo;
 import org.aerogear.kryptowire.GlobalConfigurationImpl;
@@ -28,10 +24,9 @@ import javax.inject.Inject;
 
 
 public class KWSubmitStep extends AbstractStepImpl {
-
-
     private String platform;
     private String filePath;
+    private String externalId = "";
 
     public String getPlatform() {
         return platform;
@@ -52,9 +47,13 @@ public class KWSubmitStep extends AbstractStepImpl {
     }
 
     @DataBoundConstructor
-    public KWSubmitStep(@Nonnull String platform, @Nonnull String filePath) {
+    public KWSubmitStep(@Nonnull String platform, @Nonnull String filePath, String externalId) {
         this.platform = platform;
         this.filePath = filePath;
+        if (externalId == null) {
+            externalId = "";
+        }
+        this.externalId = externalId;
     }
 
     @Extension
@@ -112,7 +111,7 @@ public class KWSubmitStep extends AbstractStepImpl {
 
             KryptowireService kws = new KryptowireServiceImpl(kwEndpoint,  kwApiKey);
 
-            JSONObject resp = kws.submit(step.platform, fp);
+            JSONObject resp = kws.submit(step.platform, fp, step.externalId);
 
             String uuid = resp.getString("uuid");
             String platform = resp.getString("platform");

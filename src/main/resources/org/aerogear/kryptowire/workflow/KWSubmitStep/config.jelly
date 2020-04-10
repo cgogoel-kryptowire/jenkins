@@ -10,4 +10,7 @@
     <f:entry field="filePath" title="File Path">
         <f:textbox/>
     </f:entry>
+    <f:entry field="externalId" title="External ID (optional)">
+        <f:textbox/>
+    </f:entry>
 </j:jelly>

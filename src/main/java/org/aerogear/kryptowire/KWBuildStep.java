@@ -22,11 +22,16 @@ import java.io.PrintStream;
 public class KWBuildStep extends Builder implements SimpleBuildStep {
     public String filePath;
     public String platform;
+    public String externalId = "";
 
     @DataBoundConstructor
-    public KWBuildStep(@Nonnull String platform, @Nonnull String filePath) {
+    public KWBuildStep(@Nonnull String platform, @Nonnull String filePath, String externalId) {
         this.platform = platform;
         this.filePath = filePath;
+        if (externalId == null) {
+            externalId = "";
+        }
+        this.externalId = externalId;
     }
 
     @Override
@@ -54,12 +59,12 @@ public class KWBuildStep extends Builder implements SimpleBuildStep {
         FilePath fp = new FilePath(new File(filePath + "/" + this.filePath));
 
         logger.println(" --- Kryptowire submit Start ---");
-        logger.println("kwSubmit: " + this.platform + " : " + this.filePath);
+        logger.println("kwSubmit: " + this.platform + " : " + this.filePath + ", external id: " + this.externalId);
 
         KryptowireService kws = new KryptowireServiceImpl(kwEndpoint,  kwApiKey);
         logger.println("Service endpoint: " + ((KryptowireServiceImpl) kws).getApiEndpoint());
 
-        JSONObject resp = kws.submit(this.platform, fp);
+        JSONObject resp = kws.submit(this.platform, fp, this.externalId);
 
         String uuid = resp.getString("uuid");
         String platform = resp.getString("platform");

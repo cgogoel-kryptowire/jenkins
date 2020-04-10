@@ -96,7 +96,7 @@ public class KryptowireServiceImpl implements KryptowireService {
     }
 
     @Override
-    public JSONObject submit(String platform, FilePath filePath) throws IOException, InterruptedException {
+    public JSONObject submit(String platform, FilePath filePath, String externalId) throws IOException, InterruptedException {
         String endPointUrl = getApiEndpoint() + "/api/submit";
 
         RequestConfig config = this.getProxyConfig();
@@ -107,6 +107,7 @@ public class KryptowireServiceImpl implements KryptowireService {
         builder.addBinaryBody("app", filePath.read(), ContentType.APPLICATION_OCTET_STREAM, filePath.getName());
         builder.addTextBody("key", getApiKey());
         builder.addTextBody("platform", platform);
+        builder.addTextBody("externalId", externalId);
 
         HttpEntity entity = builder.build();
         post.setEntity(entity);
