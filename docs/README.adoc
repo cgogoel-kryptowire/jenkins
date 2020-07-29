@@ -1,4 +1,4 @@
-== Aerogear Kryptowire Jenkins Plugin
+== Kryptowire Jenkins Plugin
 
 This Jenkins plugin integrates with the Kryptowire platform by adding the following features:
 
