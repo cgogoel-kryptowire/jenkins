@@ -81,6 +81,7 @@ public class BinaryHistoryAction implements RunAction2 {
         }
         GlobalConfigurationImpl cfg = this.getCfg();
         KryptowireService kws = new KryptowireServiceImpl(cfg.getKwEndpoint(),  cfg.getKwApiKey());
+
         if (!kws.isCompleted(this.info.getHash())) {
             System.out.println("App is not ready");
             return BinaryStatus.notReady();

@@ -11,7 +11,7 @@ public interface KryptowireService {
         COMPLETE, PROCESSING, NOT_SUBMITTED
     }
 
-    JSONObject submit(String platform, FilePath filePath, String externalId) throws IOException, InterruptedException;
+    JSONObject submit(String platform, FilePath filePath, String externalId, String subGroupIds) throws IOException, InterruptedException;
 
     JSONObject getResult(String uuid) throws IOException, InterruptedException;
 

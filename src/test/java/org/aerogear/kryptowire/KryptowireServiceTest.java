@@ -40,7 +40,7 @@ public class KryptowireServiceTest extends Mockito {
         KryptowireServiceImpl kws = new KryptowireServiceImpl(endpoint, token, httpClient);
         FilePath apkPath = new FilePath(new File(this.getClass()
                 .getResource("/myapp-fake.apk").getFile()));
-        JSONObject res = kws.submit("android", apkPath, "test-external-id");
+        JSONObject res = kws.submit("android", apkPath, "test-external-id", "");
 
         Assert.assertEquals("android", res.getString("platform"));
         Assert.assertEquals("911dafa8-2920-4478-8050-65d7c094efa7",

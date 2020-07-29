@@ -23,15 +23,20 @@ public class KWBuildStep extends Builder implements SimpleBuildStep {
     public String filePath;
     public String platform;
     public String externalId = "";
+    public String subGroupIds = "";
 
     @DataBoundConstructor
-    public KWBuildStep(@Nonnull String platform, @Nonnull String filePath, String externalId) {
+    public KWBuildStep(@Nonnull String platform, @Nonnull String filePath, String externalId, String subGroupIds) {
         this.platform = platform;
         this.filePath = filePath;
         if (externalId == null) {
             externalId = "";
         }
         this.externalId = externalId;
+        if (subGroupIds == null) {
+            subGroupIds = "";
+        }
+        this.subGroupIds = subGroupIds;
     }
 
     @Override
@@ -54,17 +59,29 @@ public class KWBuildStep extends Builder implements SimpleBuildStep {
             throw new RuntimeException("Kryptowire plugin configuration is not set!");
         }
 
+        if (!StringUtils.isEmpty(this.subGroupIds)) {
+            String[] parts = this.subGroupIds.split(",");
+            for (String part : parts) {
+                try {
+                    Integer.parseInt(part);
+                } catch (NumberFormatException e) {
+                    logger.println("Failed to validate subGroupIds. Should be a string with comma separated integers for ids.");
+                    throw new RuntimeException("Invalid sub group IDs");
+                }
+            }
+        }
+
         //FilePath fp = getContext().get(FilePath.class).child(this.filePath
         logger.println("Passed file path: " + filePath);
         FilePath fp = new FilePath(new File(filePath + "/" + this.filePath));
 
         logger.println(" --- Kryptowire submit Start ---");
-        logger.println("kwSubmit: " + this.platform + " : " + this.filePath + ", external id: " + this.externalId);
+        logger.println("kwSubmit: " + this.platform + " : " + this.filePath + ", external id: " + this.externalId + ", subgroup ids: " + this.subGroupIds);
 
         KryptowireService kws = new KryptowireServiceImpl(kwEndpoint,  kwApiKey);
         logger.println("Service endpoint: " + ((KryptowireServiceImpl) kws).getApiEndpoint());
 
-        JSONObject resp = kws.submit(this.platform, fp, this.externalId);
+        JSONObject resp = kws.submit(this.platform, fp, this.externalId, this.subGroupIds);
 
         String uuid = resp.getString("uuid");
         String platform = resp.getString("platform");

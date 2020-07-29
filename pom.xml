@@ -9,7 +9,7 @@
     </parent>
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>kryptowire</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.6</version>
     <packaging>hpi</packaging>
     <properties>
         <jenkins.version>1.642.3</jenkins.version>
@@ -28,8 +28,8 @@
     </licenses>
     <developers>
         <developer>
-          <id>aerogear</id>
-          <name>Aerogear</name>
+            <id>aerogear</id>
+            <name>Aerogear</name>
         </developer>
     </developers>
     <!-- Assuming you want to host on @jenkinsci:
@@ -70,7 +70,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.3.6</version>
+            <version>4.3.2</version>
         </dependency>
 
         <dependency>
@@ -97,7 +97,8 @@
             <version>${workflow.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency> <!-- StepConfigTester -->
+        <dependency>
+            <!-- StepConfigTester -->
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-step-api</artifactId>
             <classifier>tests</classifier>
@@ -137,7 +138,7 @@
                 <artifactId>maven-hpi-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                  <compatibleSinceVersion>2.0.0</compatibleSinceVersion>
+                    <compatibleSinceVersion>2.0.0</compatibleSinceVersion>
                 </configuration>
             </plugin>
             <plugin>
@@ -145,19 +146,19 @@
                 <artifactId>gmaven-plugin</artifactId>
                 <version>1.5</version>
                 <executions>
-                  <execution>
-                    <goals>
-                      <goal>generateStubs</goal>
-                      <goal>compile</goal>
-                      <goal>generateTestStubs</goal>
-                      <goal>testCompile</goal>
-                      <goal>execute</goal>
-                    </goals>
-                  </execution>
+                    <execution>
+                        <goals>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>testCompile</goal>
+                            <goal>execute</goal>
+                        </goals>
+                    </execution>
                 </executions>
                 <configuration>
-                  <providerSelection>1.8</providerSelection>
-                  <source>1.8</source>
+                    <providerSelection>1.8</providerSelection>
+                    <source>1.8</source>
                 </configuration>
             </plugin>
             <plugin>
@@ -170,5 +171,5 @@
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
         </plugins>
-  </build>
+    </build>
 </project>

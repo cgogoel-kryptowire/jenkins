@@ -27,6 +27,7 @@ public class KWSubmitStep extends AbstractStepImpl {
     private String platform;
     private String filePath;
     private String externalId = "";
+    private String subGroupIds = null;
 
     public String getPlatform() {
         return platform;
@@ -47,18 +48,21 @@ public class KWSubmitStep extends AbstractStepImpl {
     }
 
     @DataBoundConstructor
-    public KWSubmitStep(@Nonnull String platform, @Nonnull String filePath, String externalId) {
+    public KWSubmitStep(@Nonnull String platform, @Nonnull String filePath, String externalId, String subGroupIds) {
         this.platform = platform;
         this.filePath = filePath;
         if (externalId == null) {
             externalId = "";
         }
+        if (subGroupIds == null) {
+            subGroupIds = "";
+        }
         this.externalId = externalId;
+        this.subGroupIds = subGroupIds;
     }
 
     @Extension
     public static class DescriptorImpl extends AbstractStepDescriptorImpl {
-
         public DescriptorImpl() {
             super(KWSubmitExecution.class);
         }
@@ -111,7 +115,7 @@ public class KWSubmitStep extends AbstractStepImpl {
 
             KryptowireService kws = new KryptowireServiceImpl(kwEndpoint,  kwApiKey);
 
-            JSONObject resp = kws.submit(step.platform, fp, step.externalId);
+            JSONObject resp = kws.submit(step.platform, fp, step.externalId, step.subGroupIds);
 
             String uuid = resp.getString("uuid");
             String platform = resp.getString("platform");
