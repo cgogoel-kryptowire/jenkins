@@ -37,9 +37,11 @@ Params:
 
 * path: your mobile app binary path
 * platform: the application mobile platform (`ios` or `android`)
+* externalId: unique ID to track application 
+* subGroupIds: comma separated IDs of the sub groups that the application should be assigned to. IDs are viewable in your user settings in the Kryptowire EMM portal.
 
 ```groovy
-kwSubmit path: '/path/to/my/app-binary' platform: 'android'
+kwSubmit path: '/path/to/my/app-binary' platform: 'android' externalId: 'abc123' subGroupIds: '123,456,789'
 ```
 
 Sample android (debug build) pipeline script (assumes you have a pre-configured android node):
@@ -58,7 +60,7 @@ node('android') {
     stage('Kryptowire')
     //using a try-catch block so the pipeline script won't fail if the krypowire plugin is not installed
     try {
-        kwSubmit filePath: "app/build/outputs/apk/debug/app-debug.apk", platform: 'android'
+        kwSubmit filePath: "app/build/outputs/apk/debug/app-debug.apk", platform: 'android', externalId: 'abc123', subGroupIds: '123,456,789'
     } catch(Error e) {
           e.printStackTrace()
     }
